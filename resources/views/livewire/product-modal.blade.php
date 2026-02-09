@@ -6,7 +6,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
-        
+
         @if($product)
             <div class="modal-image">
                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
@@ -17,9 +17,9 @@
                     <h2 class="modal-title">{{ $product->name }}</h2>
                     <div class="modal-price">${{ number_format($product->price, 0) }}</div>
                 </div>
-                
+
                 <p class="modal-description">{{ $product->description }}</p>
-                
+
                 <div class="specs-grid">
                     <div class="spec-detail">
                         <div class="spec-label">Year</div>
@@ -46,7 +46,7 @@
                         <div class="spec-value">{{ $product->badge }}</div>
                     </div>
                 </div>
-                
+
                 <button wire:click="addToCartAndClose" class="btn-primary w-full">
                     Add to Cart - ${{ number_format($product->price, 0) }}
                 </button>
@@ -57,6 +57,11 @@
 
 @script
 <script>
+    // Listen for openProductModal event
+    Livewire.on('openProductModal', (event) => {
+        $wire.openProductModal(event.productId);
+    });
+
     // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && $wire.showModal) {
@@ -65,10 +70,13 @@
     });
 
     // Close modal on backdrop click
-    document.querySelector('.product-modal')?.addEventListener('click', function(e) {
-        if (e.target === this) {
-            $wire.closeModal();
-        }
-    });
+    const modalElement = document.querySelector('.product-modal');
+    if (modalElement) {
+        modalElement.addEventListener('click', function (e) {
+            if (e.target === this) {
+                $wire.closeModal();
+            }
+        });
+    }
 </script>
 @endscript

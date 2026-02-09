@@ -72,14 +72,16 @@
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
-                    <button onclick="Livewire.dispatch('toggleCart')" class="relative text-zinc-600 hover:text-zinc-900 transition-colors"
-                        aria-label="Open shopping cart">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
+                    <div class="relative">
+                        <button onclick="Livewire.dispatch('toggleCart')"
+                            class="text-zinc-600 hover:text-zinc-900 transition-colors" aria-label="Open shopping cart">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </button>
                         @livewire('cart', ['showBadge' => true])
-                    </button>
+                    </div>
                     <button id="mobileMenuToggle" class="md:hidden text-zinc-600 hover:text-zinc-900"
                         aria-label="Toggle mobile menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +109,7 @@
     <div id="searchOverlay" class="search-overlay">
         <div class="max-w-3xl mx-auto px-6">
             <div class="relative">
-                <input type="text" id="searchInput" wire:model.live="searchQuery" placeholder="Search for sports cars..."
+                <input type="text" id="searchInput" placeholder="Search for sports cars..."
                     class="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-6 py-5 text-lg text-white placeholder-white/60 focus:outline-none focus:border-white/40">
                 <button id="searchClose"
                     class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white">
@@ -119,6 +121,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Cart Sidebar -->
+    @livewire('cart')
 
     <!-- Main Content -->
     @yield('content')
@@ -138,7 +143,8 @@
                     <h4 class="font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="#catalog" class="text-zinc-400 hover:text-white transition-colors">Catalog</a></li>
-                        <li><a href="#experience" class="text-zinc-400 hover:text-white transition-colors">Experience</a></li>
+                        <li><a href="#experience"
+                                class="text-zinc-400 hover:text-white transition-colors">Experience</a></li>
                         <li><a href="#about" class="text-zinc-400 hover:text-white transition-colors">About Us</a></li>
                         <li><a href="#contact" class="text-zinc-400 hover:text-white transition-colors">Contact</a></li>
                     </ul>
@@ -180,17 +186,17 @@
 
     <script>
         // Mobile Menu Toggle
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+        document.getElementById('mobileMenuToggle').addEventListener('click', function () {
             document.getElementById('mobileMenu').classList.toggle('active');
         });
 
         // Search Toggle
-        document.getElementById('searchToggle').addEventListener('click', function() {
+        document.getElementById('searchToggle').addEventListener('click', function () {
             document.getElementById('searchOverlay').classList.add('active');
             document.getElementById('searchInput').focus();
         });
 
-        document.getElementById('searchClose').addEventListener('click', function() {
+        document.getElementById('searchClose').addEventListener('click', function () {
             document.getElementById('searchOverlay').classList.remove('active');
             document.getElementById('searchInput').value = '';
         });
@@ -211,7 +217,7 @@
         });
 
         // Close on Escape
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 document.getElementById('searchOverlay').classList.remove('active');
             }

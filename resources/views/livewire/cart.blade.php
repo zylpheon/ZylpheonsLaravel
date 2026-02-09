@@ -1,7 +1,7 @@
 <div>
     <!-- Cart Badge (for navigation) -->
     @if(isset($showBadge) && $showBadge && $this->totalItems > 0)
-        <span class="cart-badge">{{ $this->totalItems }}</span>
+        <span class="absolute -top-2 -right-2 cart-badge">{{ $this->totalItems }}</span>
     @endif
 
     <!-- Cart Sidebar -->
@@ -24,7 +24,8 @@
                     @foreach($cartItems as $item)
                         <div class="cart-item">
                             <div class="cart-item-image">
-                                <img src="{{ asset($item['product']->image) }}" alt="{{ $item['product']->name }}" class="w-full h-full object-cover rounded-lg">
+                                <img src="{{ asset($item['product']->image) }}" alt="{{ $item['product']->name }}"
+                                    class="w-full h-full object-cover rounded-lg">
                             </div>
                             <div class="cart-item-info">
                                 <div class="cart-item-name">{{ $item['product']->name }}</div>
@@ -32,7 +33,8 @@
                             </div>
                             <button wire:click="removeFromCart({{ $item['product']->id }})" class="cart-item-remove">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
@@ -45,8 +47,7 @@
                     <span class="text-zinc-600">Subtotal</span>
                     <span class="text-xl font-semibold">${{ number_format($this->subtotal, 0) }}</span>
                 </div>
-                <a href="#contact"
-                    wire:click="toggle"
+                <a href="#contact" wire:click="toggle"
                     class="w-full bg-zinc-900 text-white py-4 rounded-xl font-medium hover:bg-zinc-800 transition-colors block text-center">
                     Contact Dealer
                 </a>
@@ -65,6 +66,11 @@
     // Listen for add to cart from product catalog
     Livewire.on('addToCart', (event) => {
         $wire.addToCart(event.productId);
+    });
+
+    // Listen for toggle cart
+    Livewire.on('toggleCart', () => {
+        $wire.toggle();
     });
 </script>
 @endscript
